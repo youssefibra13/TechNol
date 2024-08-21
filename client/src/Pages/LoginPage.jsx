@@ -25,7 +25,8 @@ const LoginPage = () => {
             placeholder='Email' 
             name='email' 
             value={userData.email} 
-            onChange={handleInputChange} 
+            onChange={handleInputChange}
+            autoFocus
           />
           <input 
             type='password' 
