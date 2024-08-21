@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
-    confirmEmail: '',
     password: '',
     confirmPassword: ''
   });
@@ -26,31 +24,17 @@ const Signup = () => {
           <p className="form_error-msg">There might be an Error. Please Try Again</p>
           <input 
             type='text' 
-            placeholder='First Name' 
-            name='firstName' 
-            value={userData.firstName} 
+            placeholder='Full Name' 
+            name='name' 
+            value={userData.name} 
             onChange={handleInputChange} 
             autoFocus 
-          />
-          <input 
-            type='text' 
-            placeholder='Last Name' 
-            name='lastName' 
-            value={userData.lastName} 
-            onChange={handleInputChange} 
           />
           <input 
             type='text' 
             placeholder='Email' 
             name='email' 
             value={userData.email} 
-            onChange={handleInputChange} 
-          />
-          <input 
-            type='text' 
-            placeholder='Confirm Email' 
-            name='confirmEmail' 
-            value={userData.confirmEmail} 
             onChange={handleInputChange} 
           />
           <input 

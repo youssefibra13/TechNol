@@ -384,3 +384,42 @@ input, select, textarea {
   flex-direction: column;
   align-items: center;
 }
+
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/*========================================== Authors Page ==========================================*/
+.authors_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4rem;
+}
+
+.author {
+  background: var(--color-white);
+  padding: 1rem;
+  display: flex;
+  border-radius: var(--radius-3);
+  gap: 1rem;
+  transition: var(--transition);
+}
+
+.author:hover {
+  box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.author_image {
+  width: 5rem;
+  aspect-ratio: 1/1;
+  /*border: 0.4rem solid var(--color-bg);*/
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.author_info p {
+  margin-top: 1rem;
+}

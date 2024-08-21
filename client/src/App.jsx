@@ -22,7 +22,7 @@ import EditPost from './Pages/EditPost';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SiteLayout />,
+    element: <SiteLayout/>,
     errorElement: <Errors/>,
     children: [
       { index: true, element: <HomePage /> },
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       { path: "signup", element: <Signup /> },
       { path: "login", element: <LoginPage /> },
       { path: "logout", element: <LogoutPage /> },
-      { path: "Profile/:id", element: <Profile /> },
+      { path: "profile/:id", element: <Profile /> },
       { path: "Authors", element: <AuthorsPage /> },
       { path: "create", element: <PostCreate /> },
       { path: "posts/categories/:category", element: <Categories /> },
