@@ -391,6 +391,13 @@ input, select, textarea {
   align-items: center;
 }
 
+/* Create Post  Form sutom style*/
+.ql-editor {
+  overflow: scroll;
+  height: 10rem !important;
+  background: var(--color-white);
+}
+
 
 /*========================================== Authors Page ==========================================*/
 .authors_container {
