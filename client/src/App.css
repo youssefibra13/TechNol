@@ -345,6 +345,13 @@ input, select, textarea {
 
 }
 
+.form_error-msg {
+  background-color: red;
+  /* or any color that makes the error visible */
+  font-size: 18px;
+  /* adjust size as needed */
+}
+
 .signup {
 
   width: var(--form-width);
@@ -651,4 +658,22 @@ input, select, textarea {
   .dashboard_post-image {
     width: 5rem;
   }
+}
+
+/*========================================== Animation ==========================================*/
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-bg);
+
+}
+
+.loader_image {
+  width: 4.5rem;
+  aspect-ratio: 1/1;
 }

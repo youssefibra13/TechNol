@@ -1,24 +1,39 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import Avatar1 from '../images/avatar.png'
+import axios from 'axios'
+import Loader from '../components/Loader'
 
-const authorsData = [
-  { id: 1, avatar: Avatar1, name: 'Author 1', posts: 3 },
-  { id: 2, avatar: Avatar1, name: 'Author 2', posts: 5 },
-  { id: 3, avatar: Avatar1, name: 'Author 3', posts: 0 },
-  { id: 4, avatar: Avatar1, name: 'Author 4', posts: 2 },
-  { id: 5, avatar: Avatar1, name: 'Author 5', posts: 1 }, 
-]
+
 const AuthorsPage = () => {
-  const [authors, setAuthors] = useState(authorsData)
+  const [authors, setAuthors] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => { 
+    setLoading(true);
+    const fetchAuthors = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}/users`)
+        setAuthors(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+      setLoading(false)
+    }
+
+    fetchAuthors();
+  }, [])
+
+  if (loading) {
+    return <h2 className='center'>Loading...</h2>
+  }
   return (
     <section className="authors">
       {authors.length > 0 ? <div className="container authors_container">
         {
-          authors.map(({ id, avatar, name, posts }) => {
+          authors.map(({ _id: id, image, name, posts }) => {
             return <Link key={id} to={`/posts/users/${id}`} className='author'>
               <div className="author_image">
-                <img src={avatar} alt={`Image of ${name}`} />
+                <img src={`${import.meta.env.VITE_APP_ASSETS_URL}/uploads/${image}`} alt={`Image of ${name}`} />
               </div>
               <div className="author_info">
                 <h4>{name}</h4>

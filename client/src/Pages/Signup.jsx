@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -7,21 +9,47 @@ const Signup = () => {
     email: '',
     password: '',
     confirmPassword: ''
-  });
+  })
+
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  axios.defaults.validateStatus = function (status) {
+  return status >= 200 && status < 300; // default
+};
 
   const handleInputChange = (e) => {
     setUserData(prevState => {
-      return {...prevState, [e.target.Name]: e.target.value}
+      return {...prevState, [e.target.name]: e.target.value}
 
     })
   }
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/users/register`, userData);
+      const newUser = response.data;
+      //console.log(newUser); // Debug log
+      if (!newUser) {
+        setError("Couldn't register user. Please try again.")
+      }
+      navigate('/login');
+    } catch (err) { 
+      //console.log("Error: ", err);
+      setError(err.response.data.message)
+    }
+  }
+
 
   return (
     <section className='signup'>
       <div className="container">
         <h2>Sign Up</h2>
-        <form className="form signup_form">
-          <p className="form_error-msg">There might be an Error. Please Try Again</p>
+        <form className="form signup_form" onSubmit={registerUser}>
+          {console.log(error)}
+          {error && <p className="form_error-msg"> {error}</p>}
           <input 
             type='text' 
             placeholder='Full Name' 

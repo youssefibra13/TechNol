@@ -34,6 +34,7 @@ const postCreate = async (req, res, next) => {
                 }
                 //find user and update number of posts
                 const currentuser = await User.findById(req.user.id);
+                console.log(currentuser);
                 const usePostCount = currentuser.posts + 1;
                 await User.findByIdAndUpdate(req.user.id, { posts: usePostCount });
 

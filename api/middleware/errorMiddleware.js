@@ -8,10 +8,11 @@ const notFound = (req, res, next) => {
 /* ERROR HANDLER */
 const errorHandler = (error, req, res, next) => {
     if (res.headerSent) {
+        //console.log('Error handler triggered but headers already sent');
         return next(error);
     }
 
-    res.status(res.statusCode || 500).json({message: error.message || 'Internal Server Error'});
+    res.status(error.code || 500).json({ message: error.message || 'Internal Server Error' });
 
 }
 

@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
-const {v4: uuidv4} = require('uuid');
+const {v4: uuid} = require('uuid');
 
 
 const User = require('../models/userModel');
@@ -21,13 +21,13 @@ const registerUser = async (req, res, next) => {
         }
 
         const newEmail = email.toLowerCase();
-
         const existingUser = await User.findOne({ email: newEmail });
+
         if (existingUser) {
             return next(new HttpError('Email already exists, please login', 422));
         }
 
-        if ((password.trim()).length < 8) {
+        if (password.length < 8) {
             return next(new HttpError('Password must be at least 8 characters', 422));    
         }
 
@@ -38,12 +38,15 @@ const registerUser = async (req, res, next) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = await User.create({ name, email: newEmail, password: hashedPassword });
-        res.status(201).json(` ${newUser.email} Registered successfully`);
 
+        console.log('New user registered:', newUser);  // Debug log
+        res.status(201).json(`New User ${newUser.email} Registered successfully`);
     } catch (error) {
+        
         return next(new HttpError('Registration failed, please try again', 422));
     }
 }
+
 
 /* Login a user */
 
@@ -94,55 +97,55 @@ const getUser = async (req, res, next) => {
     }
 }
 
-/* UPDATE USER PROFILE PICTURE*/
+/* UPDATE USER PROFILE image*/
 
-//POST: /api/users/change-picture & PROTECTED
+//POST: /api/users/change-image & PROTECTED
 const changePicture = async (req, res, next) => {
     try {
-        if (!req.file.picture) {
-            return next(new HttpError('Please upload a picture', 422));
+        if (!req.files.image) {
+            return next(new HttpError('Please upload a image', 422));
         }
         
         //find user from our data base
         const user = await User.findById(req.user.id);
-        // delte picture if it exists
-        // if (user.picture) {
-        //     fs.unlink(path.join(__dirname,  `../uploads/${user.picture}`), (error) => {
+        // delte image if it exists
+        // if (user.image) {
+        //     fs.unlink(path.join(__dirname,  `../uploads/${user.image}`), (error) => {
         //         if (error) {
-        //             return next(new HttpError('Error deleting picture', 500));
+        //             return next(new HttpError('Error deleting image', 500));
         //         }
         //     });
         // }
-            if (user.picture) {
-                fs.unlink(path.join(__dirname, '..', 'uploads', user.picture), (error) => {
+            if (user.image) {
+                fs.unlink(path.join(__dirname, '..', 'uploads', user.image), (error) => {
                     if (error) {
-                        return next(new HttpError('Error deleting picture', 500));
+                        return next(new HttpError('Error deleting image', 422));
                     }
                 });
             }
 
-        const { picture } = req.files;
-        //check the size of the picture
-        if (picture.size > 500000) {
-            return next(new HttpError('Picture size should not exceed 500kb', 422));
+        const { image } = req.files;
+        //check the size of the image
+        if (image.size > 500000) {
+            return next(new HttpError('image size should not exceed 500kb', 422));
         }
 
-        let fileName = picture.name;
+        let fileName = image.name;
         
         let splitName = fileName.split('.');
         let ext = splitName[0] + uuid() + '.' + splitName[splitName.length - 1];
 
-        picture.mv(path.join(__dirname, '..', 'uploads', ext), async (error) => {
+        image.mv(path.join(__dirname, '..', 'uploads', ext), async (error) => {
             if (error) {
-                return next(new HttpError('Error uploading picture', 500));
+                return next(new HttpError('Error uploading image', 422));
             }
         });
 
-        const updatedpicture = await User.findByIdAndUpdate(req.user.id, { picture: ext }, { new: true });
-        if(!updatedpicture) {
-            return next(new HttpError('Error updating picture', 500));
+        const updatedimage = await User.findByIdAndUpdate(req.user.id, { image: ext }, { new: true });
+        if(!updatedimage) {
+            return next(new HttpError('Error updating image', 422));
         }
-        res.status(200).json(updatedpicture);
+        res.status(200).json(updatedimage);
 
     } catch (error) {
         return next(new HttpError(error));

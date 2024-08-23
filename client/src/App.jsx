@@ -18,21 +18,22 @@ import AuthorsPosts from './Pages/AuthorsPosts';
 import Dashboard from './Pages/Dashboard';
 import EditPost from './Pages/EditPost';
 import DeletePost from './Pages/DeletePost';
+import UserContextProvider from './context/userContext';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SiteLayout/>,
+    element: <UserContextProvider><SiteLayout/></UserContextProvider>,
     errorElement: <Errors/>,
     children: [
       { index: true, element: <HomePage /> },
       { path: "posts/:id", element: <Details /> },
-      { path: "signup", element: <Signup /> },
+      { path: "register", element: <Signup /> },
       { path: "login", element: <LoginPage /> },
       { path: "logout", element: <LogoutPage /> },
       { path: "profile/:id", element: <Profile /> },
-      { path: "Authors", element: <AuthorsPage /> },
+      { path: "authors", element: <AuthorsPage /> },
       { path: "create", element: <PostCreate /> },
       { path: "posts/categories/:category", element: <Categories /> },
       { path: "posts/users/:id", element: <AuthorsPosts /> },
