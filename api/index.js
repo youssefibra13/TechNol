@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: ['http://localhost:5001', 'http://localhost:5174'],
+  origin: ['http://localhost:5001', 'http://localhost:5174', 'https://socio-tech-journal.onrender.com' ],
   credentials: true
 }));
 app.use(upload());
