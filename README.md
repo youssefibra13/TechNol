@@ -44,3 +44,6 @@ Ensuring inclusivity and representation of diverse perspectives
 Grow an active community of regular contributors
 Facilitate collaboration on ideas for making technology more just and equitable
 Continuously improve the platform based on user feedback and emerging tech ethics issues
+
+# Project Link
+https://socio-tech-journal.onrender.com/
